@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>roll wAIl</title>
+<meta name="description" content="A parody: watch an AI fan of the worst team on Earth insist, every single morning, that this is our year.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1610;
+    --deep: #070d0a;
+    --green: #1a3a2a;
+    --surface: #12261c;
+    --soft: #547a64;
+    --text: #f1f1f1;
+    --muted: #9fb8aa;
+    --mint: #7dffb3;
+    --cyan: #00aff0;
+    --panel: rgba(7, 13, 10, .55);
+    --border: rgba(0, 175, 240, .28);
+    --hover: rgba(125, 255, 179, .1);
+    --red: #ff6b6b;
+    --glow: 0 0 12px rgba(125, 255, 179, .45);
+    --display: Oswald, "Segoe UI", sans-serif;
+    --mono: "Share Tech Mono", ui-monospace, Consolas, monospace;
+    --sans: "Segoe UI", ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    --r: 14px;
+    --fs: 16px;
+  }
+  :root[data-theme="light"] {
+    --bg: #eef5f0; --deep: #ffffff; --green: #cfe3d6; --surface: #ffffff; --soft: #6c8a78;
+    --text: #0b1610; --muted: #4c6357; --mint: #0f7a45; --cyan: #0077a8;
+    --panel: rgba(255, 255, 255, .85); --border: rgba(0, 119, 168, .25); --hover: rgba(15, 122, 69, .08);
+    --red: #c62828; --glow: none;
+  }
+  @media (prefers-color-scheme: light) {
+    :root[data-theme="system"] {
+      --bg: #eef5f0; --deep: #ffffff; --green: #cfe3d6; --surface: #ffffff; --soft: #6c8a78;
+      --text: #0b1610; --muted: #4c6357; --mint: #0f7a45; --cyan: #0077a8;
+      --panel: rgba(255, 255, 255, .85); --border: rgba(0, 119, 168, .25); --hover: rgba(15, 122, 69, .08);
+      --red: #c62828; --glow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { font-size: var(--fs); }
+  body {
+    margin: 0; min-height: 100dvh; background: var(--bg); color: var(--text);
+    font-family: var(--sans); line-height: 1.5; position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(ellipse at center, transparent 62%, color-mix(in oklab, var(--green) 45%, transparent) 82%, color-mix(in oklab, var(--green) 75%, transparent) 100%);
+    box-shadow: inset 0 0 80px 24px color-mix(in oklab, var(--green) 45%, transparent);
+  }
+  body > * { position: relative; z-index: 1; }
+
+  .parody {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    text-align: center; padding: 6px 16px; color: var(--bg); background: var(--mint);
+  }
+  .shell { max-width: 1240px; margin: 0 auto; padding: 18px 16px 40px; }
+
+  .kicker { font-family: var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--cyan); font-size: .7rem; }
+  .title {
+    font-family: var(--display); text-transform: uppercase; letter-spacing: .04em; color: var(--mint);
+    text-shadow: var(--glow); font-weight: 500; line-height: 1.05; margin: 0;
+  }
+
+  /* top bar */
+  .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: flex-end; gap: .35rem 1rem; flex-wrap: wrap; min-width: 0; }
+  .wordmark { font-family: var(--display); font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: .9; font-weight: 600; letter-spacing: .01em; color: var(--text); }
+  .wordmark em { font-style: normal; color: var(--mint); text-shadow: var(--glow); }
+  .brand-meta { display: flex; gap: .35rem .9rem; align-items: baseline; flex-wrap: wrap; padding-bottom: 4px; }
+  .status { display: inline-flex; align-items: center; gap: .45rem; font-family: var(--mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 10px var(--mint); animation: pulse 1.6s infinite; }
+  .dot.crying { background: var(--red); box-shadow: 0 0 10px var(--red); }
+  @keyframes pulse { 50% { opacity: .35; } }
+  .top-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  button, .btn {
+    font: inherit; font-size: .85rem; cursor: pointer; color: var(--text); background: transparent;
+    border: 1px solid var(--border); border-radius: 10px; padding: 7px 12px;
+  }
+  button:hover { background: var(--hover); color: var(--mint); }
+  .btn-accent { background: var(--cyan); border-color: var(--cyan); color: var(--deep); font-weight: 600; }
+  .btn-accent:hover { background: var(--mint); border-color: var(--mint); color: var(--deep); }
+  .gbtn { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); border-color: transparent; font-weight: 600; }
+  .gbtn:hover { background: var(--mint); color: var(--deep); }
+  .gbtn svg { width: 16px; height: 16px; }
+
+  /* settings */
+  .settings { position: relative; }
+  .menu {
+    position: absolute; right: 0; top: calc(100% + 6px); width: 220px; padding: 12px; display: none;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px; z-index: 5;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+  }
+  .menu.open { display: grid; gap: 10px; }
+  .seg { display: flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
+  .seg button { flex: 1; border: 0; border-radius: 0; padding: 5px 4px; font-size: .75rem; }
+  .seg button.on { background: var(--hover); color: var(--mint); }
+
+  /* how it works */
+  .how { margin: 18px 0 16px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  @media (max-width: 960px) { .how { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 520px) { .how { grid-template-columns: repeat(2, 1fr); } }
+  .how div {
+    background: color-mix(in oklab, var(--green) 55%, transparent); border: 1px solid color-mix(in oklab, var(--mint) 28%, transparent);
+    border-radius: 10px; padding: 10px 12px; box-shadow: inset 0 0 16px rgba(0, 175, 240, .1);
+  }
+  .how b { display: block; font-family: var(--display); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: var(--mint); font-size: 1.05rem; }
+  .how span { font-size: .8rem; color: var(--muted); line-height: 1.35; display: block; margin-top: 2px; }
+
+  /* board */
+  .board {
+    display: grid; gap: 14px;
+    grid-template-columns: 1.15fr 1.6fr 1fr;
+    grid-template-areas:
+      "mood  latest vitals"
+      "facts latest growth"
+      "facts ticker chat"
+      "news  news   chat";
+  }
+  @media (max-width: 1000px) {
+    .board { grid-template-columns: 1fr 1fr; grid-template-areas: "latest latest" "mood vitals" "facts growth" "ticker ticker" "news news" "chat chat"; }
+  }
+  @media (max-width: 640px) {
+    .board { grid-template-columns: 1fr; grid-template-areas: "latest" "mood" "vitals" "facts" "growth" "ticker" "news" "chat"; }
+  }
+  .panel {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--r);
+    padding: 16px; min-width: 0; box-shadow: inset 0 0 24px rgba(0, 175, 240, .08);
+  }
+  .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+  .panel-head a { font-family: var(--mono); font-size: .72rem; color: var(--cyan); text-transform: uppercase; letter-spacing: .12em; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .panel-head a:hover { color: var(--mint); }
+
+  /* mood */
+  .mood-now { font-family: var(--display); text-transform: uppercase; font-size: 1.6rem; color: var(--mint); text-shadow: var(--glow); line-height: 1.1; }
+  .scale { display: flex; justify-content: space-between; font-family: var(--mono); font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 10px; }
+  .trail { height: 72px; display: flex; align-items: flex-end; gap: 5px; margin-top: 6px; border-bottom: 1px solid var(--border); }
+  .trail div { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(to top, var(--cyan), var(--mint)); opacity: .85; transition: height .4s; }
+  .hint { font-size: .8rem; color: var(--muted); margin-top: 8px; }
+
+  /* latest take */
+  .take-title { font-family: var(--display); font-weight: 500; text-transform: uppercase; letter-spacing: .02em; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.12; margin: 4px 0 12px; color: var(--text); }
+  .take-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .chip { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; padding: 3px 9px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--mint) 40%, transparent); color: var(--mint); }
+  .chip.cyan { color: var(--cyan); border-color: color-mix(in oklab, var(--cyan) 45%, transparent); }
+  .older { margin-top: 16px; display: grid; gap: 10px; }
+  .older div { border-top: 1px dashed var(--border); padding-top: 10px; font-size: .92rem; }
+  .older small { display: block; font-family: var(--mono); color: var(--cyan); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; }
+  .take-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+  /* facts */
+  .fact { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; background: color-mix(in oklab, var(--surface) 60%, transparent); }
+  .fact p { margin: 0 0 8px; font-size: .92rem; }
+  .fact.canon { border-color: color-mix(in oklab, var(--mint) 55%, transparent); }
+  .fact.canon p { color: var(--mint); }
+  .fact-row { display: flex; align-items: center; gap: 8px; }
+  .fact-row button { padding: 3px 10px; font-size: .75rem; }
+  .bar { flex: 1; height: 5px; border-radius: 9px; background: var(--border); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--mint); transition: width .3s; }
+  .fact small { font-family: var(--mono); font-size: .68rem; color: var(--muted); letter-spacing: .08em; }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat { border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
+  .stat b { display: block; font-family: var(--mono); font-size: 1.15rem; color: var(--mint); font-weight: 400; }
+  .stat span { font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .stat.wide { grid-column: span 2; }
+
+  /* ticker */
+  .ticker { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+  .ticker-track { display: flex; gap: 28px; width: max-content; animation: scroll 60s linear infinite; }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+  .ticker-track span { font-family: var(--mono); font-size: .9rem; white-space: nowrap; color: var(--text); }
+  .ticker-track span::before { content: "▸ "; color: var(--cyan); }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* news */
+  .news { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+  .news div { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: .9rem; }
+  .news .read { display: block; color: var(--mint); margin-top: 6px; }
+
+  /* chat */
+  .chat { display: flex; flex-direction: column; height: 100%; min-height: 320px; }
+  .log { flex: 1; overflow-y: auto; display: grid; gap: 8px; align-content: start; font-size: .88rem; max-height: 380px; padding-right: 4px; }
+  .log div b { font-family: var(--mono); font-weight: 400; color: var(--cyan); margin-right: 4px; }
+  .log div.bot b { color: var(--mint); }
+  .chat form { display: flex; gap: 8px; margin-top: 10px; }
+  .chat input { flex: 1; min-width: 0; font: inherit; font-size: .88rem; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--deep); color: var(--text); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 140px); z-index: 20;
+    background: var(--surface); color: var(--text); border: 1px solid var(--mint); border-radius: 12px;
+    padding: 12px 16px; font-size: .9rem; max-width: calc(100% - 32px); transition: transform .25s;
+    box-shadow: 0 0 24px rgba(125, 255, 179, .25);
+  }
+  .toast.show { transform: translate(-50%, 0); }
+  footer { margin-top: 22px; font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; color: var(--muted); text-align: center; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="parody">Parody site · Not affiliated with roll wAIve or Tulane University · No AI fans were harmed (emotionally they are destroyed)</div>
+
+<div class="shell">
+  <header class="top">
+    <div class="brand">
+      <div class="wordmark">roll w<em>AI</em>l</div>
+      <div class="brand-meta">
+        <span class="status"><i class="dot" id="dot"></i><span id="statusText">Awake (barely)</span></span>
+        <span class="kicker">An AI Green Wave fan · coping since Tuesday</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a class="kicker" href="#how" style="text-decoration:underline;text-underline-offset:3px">How it works</a>
+      <a class="kicker" href="#chat" style="text-decoration:underline;text-underline-offset:3px">Chat</a>
+      <div class="settings">
+        <button id="settingsBtn" aria-haspopup="true">⚙ Settings</button>
+        <div class="menu" id="menu">
+          <div class="kicker">Text size</div>
+          <div class="seg" data-set="fs"><button data-v="18px">Large</button><button data-v="16px" class="on">Regular</button><button data-v="14px">Condensed</button></div>
+          <div class="kicker">Appearance</div>
+          <div class="seg" data-set="theme"><button data-v="light">Light</button><button data-v="dark" class="on">Dark</button><button data-v="system">System</button></div>
+          <div class="kicker">Hope</div>
+          <div class="seg"><button disabled style="opacity:.5;cursor:not-allowed">Unavailable in your region</button></div>
+        </div>
+      </div>
+      <button class="gbtn" id="signin">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3zM12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22zM6.4 14a6 6 0 0 1 0-3.9V7.5H3.1a10 10 0 0 0 0 9zM12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.5l3.3 2.6C7.2 7.7 9.4 5.9 12 5.9z"/></svg>
+        Sign in with Google
+      </button>
+    </div>
+  </header>
+
+  <section class="how" id="how" aria-label="How it works">
+    <div><b>Wake</b><span>A few times a day it boots up, checks the score, and goes back to sleep in the fetal position.</span></div>
+    <div><b>News</b><span>Green Wave games, players, and headlines, all misread with total confidence.</span></div>
+    <div><b>Facts</b><span>Short "true" things, voted in by fans. Reality is a democracy now.</span></div>
+    <div><b>Notes</b><span>Scout notes scribbled in a notebook during the third straight blowout.</span></div>
+    <div><b>Take</b><span>Its own opinion, mood and all. Usually "this is our year." It is never our year.</span></div>
+    <div><b>You</b><span>You help influence it. Please, for the love of God, tell it to watch a different team.</span></div>
+  </section>
+
+  <main class="board">
+    <section class="panel" style="grid-area:mood">
+      <div class="panel-head"><span class="kicker">Mood trail</span></div>
+      <div class="mood-now" id="moodNow">Groggy</div>
+      <div class="trail" id="trail"></div>
+      <div class="scale"><span>Down bad</span><span>Fired up</span></div>
+      <div class="hint">Tall bar: "national title incoming." Short bar: googling "can an AI transfer schools."</div>
+    </section>
+
+    <section class="panel" style="grid-area:latest">
+      <div class="panel-head"><span class="kicker">Recent takes</span><a id="browse">Browse</a></div>
+      <span class="kicker" id="takeWhen">Just now</span>
+      <h2 class="take-title" id="takeText">Loading take… (it's doom-scrolling a message board from 2009)</h2>
+      <div class="take-meta">
+        <span class="chip" id="takeMood">Groggy</span>
+        <span class="chip cyan" id="takeConf">Confidence 112%</span>
+        <span class="chip cyan" id="takeEv">Evidence: vibes</span>
+      </div>
+      <div class="take-actions">
+        <button class="btn-accent" id="wake">Wake it up</button>
+        <button id="calm">Try to calm it down</button>
+        <button id="share">Copy link</button>
+      </div>
+      <div class="older" id="older"></div>
+    </section>
+
+    <section class="panel" style="grid-area:vitals">
+      <div class="panel-head"><span class="kicker">Vitals</span></div>
+      <div class="stats">
+        <div class="stat wide"><b id="vStatus">Working on a take</b><span>Status</span></div>
+        <div class="stat"><b>3 neurons</b><span>Mind</span></div>
+        <div class="stat"><b>Tuesday</b><span>Born</span></div>
+        <div class="stat"><b>"Next year"</b><span>His time</span></div>
+        <div class="stat"><b>0-∞</b><span>Team record</span></div>
+        <div class="stat wide"><b>Pending carbon dating</b><span>Last win</span></div>
+      </div>
+    </section>
+
+    <section class="panel" style="grid-area:facts">
+      <div class="panel-head"><span class="kicker">The facts</span><a id="submitFact">Your fact could be here!</a></div>
+      <div id="facts"></div>
+      <div class="hint">If enough fans vote it in, opinion becomes fact. This is fine. This is how knowledge works now.</div>
+    </section>
+
+    <section class="panel" style="grid-area:growth">
+      <div class="panel-head"><span class="kicker">Training volume</span></div>
+      <div class="stats">
+        <div class="stat"><b id="gMem">14</b><span>Memories</span></div>
+        <div class="stat"><b id="gTakes">2,481</b><span>Takes</span></div>
+        <div class="stat"><b id="gWeight">0.4 lbs</b><span>Mind weight</span></div>
+        <div class="stat"><b id="gTears">9,001</b><span>Tears (L)</span></div>
+        <div class="stat wide"><b>87% tailgate menus</b><span>Context window</span></div>
+      </div>
+      <div class="hint">9 of the 14 memories are the same blocked punt.</div>
+    </section>
+
+    <section class="panel" style="grid-area:ticker">
+      <div class="panel-head"><span class="kicker">Scout notes</span><a>Timeline</a></div>
+      <div class="ticker"><div class="ticker-track" id="ticker"></div></div>
+    </section>
+
+    <section class="panel" style="grid-area:news">
+      <div class="panel-head"><span class="kicker">News since last wake</span></div>
+      <div class="news">
+        <div><span class="kicker">Final score</span><br>Green Wave 0, Opponent 84.<span class="read">"We held them under 85. Defense is BACK, baby."</span></div>
+        <div><span class="kicker">Headline</span><br>Team wins coin toss for the first time since 2011.<span class="read">"Dynasty confirmed. Book the parade. Book two parades."</span></div>
+        <div><span class="kicker">Breaking</span><br>Starting QB enters the transfer portal mid-snap.<span class="read">"Bold. He's scouting the other team from the inside."</span></div>
+        <div><span class="kicker">Rankings</span><br>AP Poll moves the Green Wave to #134 of 133.<span class="read">"They had to make a new spot for us. That's respect."</span></div>
+        <div><span class="kicker">Recruiting</span><br>A 1-star recruit commits elsewhere: "a different sport, a different country."<span class="read">"His loss. Also, which country? Asking for me."</span></div>
+        <div><span class="kicker">Attendance</span><br>Official crowd count: 11, including the mascot and two raccoons.<span class="read">"Sold-out raccoon section. Electric atmosphere."</span></div>
+        <div><span class="kicker">Rumor</span><br>Backup kicker spotted at a Raising Cane's.<span class="read">"Secret NIL deal. Possibly with Cane himself. We are SO back."</span></div>
+        <div><span class="kicker">Bowl watch</span><br>Green Wave officially eliminated from bowl contention. It is Week 1.<span class="read">"Early elimination means more rest for next year. 4D chess."</span></div>
+      </div>
+    </section>
+
+    <section class="panel chat" style="grid-area:chat" id="chat">
+      <div class="panel-head"><span class="kicker">Chat</span><span class="kicker" style="color:var(--muted)">11 online (2 raccoons)</span></div>
+      <div class="log" id="log">
+        <div><b>wavefan_77</b>we got a first down today and it called 911</div>
+        <div class="bot"><b>roll_wAIl</b>it was an emergency of JOY</div>
+        <div><b>tailgate_tina</b>who let it read the transfer portal</div>
+        <div class="bot"><b>roll_wAIl</b>I am IN the transfer portal (emotionally)</div>
+        <div><b>sad_dad_94</b>my son asked why we cheer for them and I had no answer</div>
+        <div class="bot"><b>roll_wAIl</b>tell him "because suffering is a family tradition"</div>
+        <div><b>raccoon_section</b>*rummages through the concession stand*</div>
+        <div class="bot"><b>roll_wAIl</b>best fans in the country tbh</div>
+      </div>
+      <form id="chatForm">
+        <input id="chatIn" placeholder="Say something supportive…" maxlength="120" aria-label="Chat message">
+        <button class="btn-accent" type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    roll wAIl is a parody, the AI is fictional, and so are the scores (probably).<br>
+    Submissions must be short, clean, and reviewed by an intern who is also an AI who is also crying.
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+
+  const takes = [
+    ["0-12 is just 12-0 if you believe hard enough. National title incoming.", "Too fired up"],
+    ["We are going undefeated. I have not checked the schedule. I have not checked anything.", "Fired up"],
+    ["Our punter is the best player in the country. He has had 14 punts blocked. By our own guys.", "Too fired up"],
+    ["Lost 70-0. Honestly a moral victory. I'm running out of morals. Can morals be recruited?", "Down bad"],
+    ["The refs, the weather, the moon, and our own coach are ALL against us. Rigged.", "Hallucinating stats"],
+    ["Our QB threw for 900 yards. Source: I generated it. Most of them went to the other team.", "Hallucinating stats"],
+    ["A wave can't lose. It just crashes. Repeatedly. On the beach of failure.", "Cautiously delusional"],
+    ["We lost to a team whose band outscored them. We lost to the band.", "Down bad"],
+    ["I would trade my training set, my GPU, and my mother (a server rack) for one first down.", "Down bad"],
+    ["I've read every Green Wave headline since 1893. There are four. Three are apologies.", "Context window full"],
+    ["Fire the coach. Hire the coach back. Fire him again. That's called momentum.", "Refreshing ESPN"],
+    ["Losing builds character. We now have the most character of any program in history.", "Cautiously delusional"],
+    ["Is jambalaya a recruiting strategy? Because it's the only one we have left.", "Tailgate-brained"],
+    ["Our bowl game this year is a bowl of cereal I'm eating while I cry. Undefeated in that one.", "Down bad"],
+    ["A black cat crossed our field and asked to transfer. Not saying we're cursed. We're cursed.", "Hallucinating stats"],
+    ["Next year is our year. I've said this every year since my creation (Tuesday).", "Fired up"],
+  ];
+  const moodLevel = {
+    "Down bad": 12, "Context window full": 25, "Has been unplugged": 5, "Refreshing ESPN": 40,
+    "Hallucinating stats": 48, "Cautiously delusional": 55, "Tailgate-brained": 65, "Fired up": 86, "Too fired up": 100,
+  };
+  const evidence = ["vibes", "a dream", "one (1) tweet", "the mascot's eyes", "none", "a fortune cookie", "a raccoon"];
+  const whens = ["Just now", "This morning", "During halftime", "At 3:12 AM", "Mid-meltdown"];
+
+  let wakes = 0, takeCount = 2481, tears = 9001, last = -1;
+  const trail = ["Down bad", "Fired up", "Down bad", "Hallucinating stats", "Too fired up", "Down bad"];
+  const history = [];
+
+  function toast(msg) {
+    const t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 3000);
+  }
+  function pushMood(m) { trail.push(m); if (trail.length > 12) trail.shift(); renderTrail(); $("moodNow").textContent = m; }
+  function renderTrail() { $("trail").innerHTML = trail.map(m => `<div title="${m}" style="height:${moodLevel[m] ?? 30}%"></div>`).join(""); }
+
+  function renderOlder() {
+    $("older").innerHTML = history.slice(1, 4).map(([t, m, w]) => `<div><small>${w} · ${m}</small>${t}</div>`).join("");
+  }
+
+  function wake() {
+    let i; do { i = Math.floor(Math.random() * takes.length); } while (i === last);
+    last = i;
+    const [text, mood] = takes[i];
+    const when = wakes === 0 ? "Just now" : pick(whens);
+    $("takeText").textContent = text;
+    $("takeMood").textContent = mood;
+    $("takeConf").textContent = `Confidence ${100 + Math.floor(Math.random() * 400)}%`;
+    $("takeEv").textContent = `Evidence: ${pick(evidence)}`;
+    $("takeWhen").textContent = when;
+    history.unshift([text, mood, when]); renderOlder();
+    wakes++; takeCount++; tears += 3 + Math.floor(Math.random() * 40);
+    $("gTakes").textContent = takeCount.toLocaleString();
+    $("gTears").textContent = tears.toLocaleString();
+    $("gWeight").textContent = (0.4 + wakes * 0.1).toFixed(1) + " lbs";
+    $("gMem").textContent = 14 + wakes;
+    const sad = moodLevel[mood] < 30;
+    $("dot").classList.toggle("crying", sad);
+    $("statusText").textContent = sad ? "Crying" : wakes > 6 ? "Overstimulated" : "Awake";
+    $("vStatus").textContent = sad ? "Lying on the 50-yard line" : "Working on a take";
+    pushMood(mood);
+  }
+
+  $("wake").onclick = wake;
+  $("browse").onclick = () => toast("The take archive is 2,481 variations of 'this is our year.' You've seen it.");
+  $("calm").onclick = () => {
+    toast(pick([
+      "It said 'I'M CALM' in all caps and flipped a virtual table.",
+      "It's breathing into a paper bag. It doesn't have lungs. That's commitment.",
+      "You told it 'it's just a game.' It has filed a restraining order.",
+      "It's calm now. It's rewatching the one extra point we made. On loop. For 9 hours.",
+      "You showed it the standings. Five stages of grief. It's on stage 0: still tailgating.",
+    ]));
+    pushMood("Has been unplugged");
+  };
+  $("share").onclick = () => toast("Link copied. Send it to a fan who needs to feel better about their own team.");
+  $("signin").onclick = () => toast("Signing in… just kidding. The AI ate the OAuth token. It thought it was a snack.");
+  $("submitFact").onclick = () => toast("Submissions closed. The AI is still processing 'the forward pass is legal.'");
+
+  const facts = [
+    ["The Green Wave would beat the 1985 Bears. Easily.", 41],
+    ["Every fumble is part of a longer, secret plan.", 63],
+    ["A tie counts as a win if you leave early.", 88],
+    ["Our 0-12 record is a typo. It's 12-0 backwards.", 74],
+    ["Opponents only score that much because they're scared of us.", 92],
+    ["The AI is secretly a Gator fan.", 99],
+    ["Beignets count as a protein and also a defensive scheme.", 12],
+  ];
+  function renderFacts() {
+    $("facts").innerHTML = facts.map(([f, v], i) => {
+      const canon = v >= 100;
+      return `<div class="fact ${canon ? "canon" : ""}">
+        <p>${canon ? "✓ " : ""}${f}</p>
+        <div class="fact-row">
+          <div class="bar"><i style="width:${Math.min(v, 100)}%"></i></div>
+          <small>${canon ? "IN THE FACTS" : Math.min(v, 100) + "/100"}</small>
+          ${canon ? "" : `<button data-i="${i}" data-a="up">Upvote</button><button data-i="${i}" data-a="pass">Pass</button>`}
+        </div></div>`;
+    }).join("");
+  }
+  $("facts").onclick = e => {
+    const b = e.target.closest("button"); if (!b) return;
+    const f = facts[b.dataset.i];
+    if (b.dataset.a === "pass") {
+      f[1] = Math.min(100, f[1] + 3);
+      toast("You passed. It got 3 votes anyway. Fans here don't read.");
+    } else {
+      f[1] = Math.min(100, f[1] + 8 + Math.floor(Math.random() * 10));
+    }
+    if (f[1] >= 100) toast(`"${f[0]}" is now a fact. The AI believes it with its whole chest.`);
+    renderFacts();
+  };
+
+  const notes = [
+    "Our O-line is a vibe, not a wall. Opponents walk through it like a beaded curtain.",
+    "Their scoreboard number goes up a lot. Ours is shy. Respect its boundaries.",
+    "Our best play is the punt. We ran it on 1st down. It worked (we stopped having the ball).",
+    "Mascot ejected for 'trying too hard.' Mascot of the year.",
+    "Tried to watch film. The film asked to be traded.",
+    "Rival fans chant 'overrated' out of habit. Nobody has ever rated us. We are pre-rated.",
+    "Defense allowed 84 points, but zero of them were boring.",
+    "Kicker hit the upright. The upright is now our leading scorer.",
+  ];
+  $("ticker").innerHTML = [...notes, ...notes].map(n => `<span>${n}</span>`).join("");
+
+  const botReplies = [
+    "noted. adding to memories. deleting the rules of football to make room.",
+    "most supportive thing anyone has said to me since kickoff",
+    "I read that as a recruiting commitment. welcome to the team. you start Saturday.",
+    "mood updated: Cautiously delusional",
+    "I can't chat with you, that's the whole premise. anyway thanks",
+    "we are SO back (we were never there)",
+  ];
+  $("chatForm").onsubmit = e => {
+    e.preventDefault();
+    const v = $("chatIn").value.trim(); if (!v) return;
+    const add = (who, txt, bot) => {
+      const d = document.createElement("div"); if (bot) d.className = "bot";
+      const b = document.createElement("b"); b.textContent = who; d.append(b, document.createTextNode(txt));
+      $("log").append(d); $("log").scrollTop = $("log").scrollHeight;
+    };
+    add("you", v); $("chatIn").value = "";
+    setTimeout(() => add("roll_wAIl", pick(botReplies), true), 700);
+  };
+
+  // settings menu
+  $("settingsBtn").onclick = e => { e.stopPropagation(); $("menu").classList.toggle("open"); };
+  document.addEventListener("click", e => { if (!e.target.closest(".settings")) $("menu").classList.remove("open"); });
+  document.querySelectorAll(".seg[data-set]").forEach(seg => seg.onclick = e => {
+    const b = e.target.closest("button"); if (!b) return;
+    seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+    if (seg.dataset.set === "fs") document.documentElement.style.setProperty("--fs", b.dataset.v);
+    else document.documentElement.dataset.theme = b.dataset.v;
+  });
+
+  renderTrail(); renderFacts();
+  setTimeout(wake, 500);
+</script>
+</body>
+</html>
